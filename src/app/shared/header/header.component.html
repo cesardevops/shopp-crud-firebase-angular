@@ -6,11 +6,21 @@
 </header>
 
 <nav id="main-nav">
-  <form action="" class="form">
-    <div class="input input-search" style="    width: 250px;
+  <style>
+.input-search::before {
+  top: 26px;
+}
+.input-search:after{
+  top: 12px;
+}
+  </style>
+  <form action="" class="form" style="line-height: 80px;">
+    <div class="input input-search" style="    width: 228px;
+    margin-left: 1em;
     position: relative;
-    margin-top: 10px;
-    background: white;">
+    margin-top: 16px;
+    background: white;
+    height:48px;">
         <input type="search" name="input-search" id="input-search" placeholder="Search...">
     </div>
   </form>
