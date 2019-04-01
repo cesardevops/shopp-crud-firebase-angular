@@ -1,5 +1,7 @@
 <app-header></app-header>
 
+<router-outlet></router-outlet>
+
 <div id="cd-shadow-layer"></div>
 
 <div id="cd-cart">
@@ -32,3 +34,79 @@
   
   <p class="cd-go-to-cart"><a href="#0">Go to cart page</a></p>
 </div> <!-- cd-cart -->
+
+<script>
+  (function(){
+      var formsCollection = document.querySelectorAll("form");
+      for (let index = 0; index < formsCollection.length; index++) {
+          var elements = formsCollection[index].elements;
+          setEvent(elements);
+      }
+
+      function emailValidate(element){
+          //console.log(elements[index].validity.valid);
+          var is_valid = element.validity.valid;
+          if(!is_valid){
+              element.parentElement.parentElement.children[1].className = "label active error";
+              element.parentElement.className = element.parentElement.className + " error";
+          }  
+      }
+
+      function setEvent(elements){
+
+
+          var focusInput = function(){
+            
+
+              if(this.type == "search"){
+                  this.parentElement.className = this.parentElement.className + " focus focusable";
+              }else{
+                  this.parentElement.className = this.parentElement.className + " focus";
+                  this.parentElement.parentElement.children[1].className = "label active";
+                  this.parentElement.className =  this.parentElement.className.replace("error", "");
+
+              }
+
+          }
+          var blurInput = function(){
+
+              if(this.type == "search"){
+                  this.parentElement.className = this.parentElement.className.replace(" focus focusable","");
+              }
+              if (this.value <= 0 && this.type != "search") {
+                  this.parentElement.className = this.parentElement.className.replace("focus","");
+                  this.parentElement.parentElement.children[1].className = "label error";
+                  this.parentElement.className = this.parentElement.className + " error";
+              }else
+              {
+                  if(this.type == "email")
+                  {
+                      emailValidate(this);
+                  }
+              }
+
+          }
+
+          for (let index = 0; index < elements.length; index++) {
+              if (elements[index].type == "text" || elements[index].type == "email" || elements[index].type == "password" || elements[index].type == "search") {
+                  elements[index].addEventListener('focus', focusInput); 
+                  elements[index].addEventListener('blur', blurInput); 
+                  
+                  // el input tiene valores escritos
+                  if(elements[index].value.length > 0)
+                  {
+                      elements[index].parentElement.parentElement.children[1].className = "label active";
+                  }
+
+                  // validar el input tipo email 
+                  if (elements[index].type == "email" ) {
+                      emailValidate(elements[index]);
+                  }
+                  
+
+              }
+          }
+      }
+
+  }())
+  </script>
